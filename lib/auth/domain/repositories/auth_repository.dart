@@ -18,4 +18,6 @@ abstract class AuthRepository {
   Future<Either<Failure, String?>> getUserLoggedToken();
 
   Future<Either<Failure, bool>> setUserLoggedToken(String token);
+
+  Future<Either<Failure, Unit>> removeUserToken();
 }

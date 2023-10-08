@@ -58,6 +58,12 @@ dependencies:
   form_builder_validators: ^9.1.0
   # for db
   sqflite: ^2.3.0
+  # for dynamic link
+  uni_links: ^0.5.1
+
+
+  # for sharing dynamic link
+  share_plus: 7.0.0
 
 
 dev_dependencies:

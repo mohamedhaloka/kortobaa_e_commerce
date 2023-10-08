@@ -380,6 +380,12 @@ abstract class Translations {
   /// In ar, this message translates to:
   /// **'شارك المنتج'**
   String get shareApp;
+
+  /// No description provided for @logOut.
+  ///
+  /// In ar, this message translates to:
+  /// **'تسجيل الخروج'**
+  String get logOut;
 }
 
 class _TranslationsDelegate extends LocalizationsDelegate<Translations> {

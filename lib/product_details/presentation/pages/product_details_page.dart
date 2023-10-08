@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kortobaa_ecommerce/cart/presentation/cubits/add_product_to_cart_cubit.dart';
 import 'package:kortobaa_ecommerce/cart/presentation/cubits/delete_product_from_cart_cubit.dart';
 import 'package:kortobaa_ecommerce/cart/presentation/cubits/get_cart_product_cubit.dart';
+import 'package:kortobaa_ecommerce/core/dynamic_link_service.dart';
 import 'package:kortobaa_ecommerce/core/presentation/blocs/base_states/base_state.dart';
 import 'package:kortobaa_ecommerce/core/presentation/themes/app_theme.dart';
 import 'package:kortobaa_ecommerce/core/presentation/utils/generated/translation/translations.dart';
@@ -14,6 +15,7 @@ import 'package:kortobaa_ecommerce/favorite/presentation/cubits/get_favorite_pro
 import 'package:kortobaa_ecommerce/home/domain/entities/product.dart';
 import 'package:kortobaa_ecommerce/injection.dart';
 import 'package:kortobaa_ecommerce/product_details/presentation/cubits/get_product_by_id_cubit.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   static String path = 'productDetailsPage';
@@ -156,20 +158,28 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               ),
                               const VerticalDivider(),
                               Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.share,
-                                      color: themeData.appColors.greyColor,
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Text(
-                                      tr.shareApp,
-                                      style: themeData.textTheme.bodyMedium,
-                                    ),
-                                  ],
+                                child: InkWell(
+                                  onTap: () => DynamicLinkHandler.I
+                                      .createDynamicLink(state.item!)
+                                      .then(
+                                        (value) => Share.share(value),
+                                      ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.share,
+                                        color: themeData.appColors.greyColor,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Text(
+                                        tr.shareApp,
+                                        style: themeData.textTheme.bodyMedium,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],

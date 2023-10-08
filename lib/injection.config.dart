@@ -26,22 +26,26 @@ import 'package:kortobaa_ecommerce/auth/domain/usecases/login_use_case.dart'
     as _i39;
 import 'package:kortobaa_ecommerce/auth/domain/usecases/register_use_case.dart'
     as _i40;
-import 'package:kortobaa_ecommerce/auth/domain/usecases/set_logged_user_token_use_case.dart'
+import 'package:kortobaa_ecommerce/auth/domain/usecases/remove_user_token_use_case.dart'
     as _i41;
-import 'package:kortobaa_ecommerce/auth/presentation/cubits/get_logged_user_token_cubit.dart'
-    as _i48;
-import 'package:kortobaa_ecommerce/auth/presentation/cubits/login_cubit.dart'
-    as _i51;
-import 'package:kortobaa_ecommerce/auth/presentation/cubits/register_cubit.dart'
-    as _i52;
-import 'package:kortobaa_ecommerce/cart/presentation/cubits/add_product_to_cart_cubit.dart'
+import 'package:kortobaa_ecommerce/auth/domain/usecases/set_logged_user_token_use_case.dart'
     as _i42;
+import 'package:kortobaa_ecommerce/auth/presentation/cubits/get_logged_user_token_cubit.dart'
+    as _i49;
+import 'package:kortobaa_ecommerce/auth/presentation/cubits/login_cubit.dart'
+    as _i52;
+import 'package:kortobaa_ecommerce/auth/presentation/cubits/register_cubit.dart'
+    as _i53;
+import 'package:kortobaa_ecommerce/auth/presentation/cubits/remove_user_token_cubit.dart'
+    as _i54;
+import 'package:kortobaa_ecommerce/cart/presentation/cubits/add_product_to_cart_cubit.dart'
+    as _i43;
 import 'package:kortobaa_ecommerce/cart/presentation/cubits/delete_product_from_cart_cubit.dart'
     as _i31;
 import 'package:kortobaa_ecommerce/cart/presentation/cubits/get_cart_product_cubit.dart'
     as _i33;
 import 'package:kortobaa_ecommerce/cart/presentation/cubits/get_cart_product_list_cubit.dart'
-    as _i45;
+    as _i46;
 import 'package:kortobaa_ecommerce/category/data/datasource/remote/category_remote_data_source.dart'
     as _i28;
 import 'package:kortobaa_ecommerce/category/data/repositories/category_repository_impl.dart'
@@ -51,7 +55,7 @@ import 'package:kortobaa_ecommerce/category/domain/repositories/category_reposit
 import 'package:kortobaa_ecommerce/category/domain/usecases/get_category_list_use_case.dart'
     as _i34;
 import 'package:kortobaa_ecommerce/category/presentation/cubits/get_category_list_cubit.dart'
-    as _i46;
+    as _i47;
 import 'package:kortobaa_ecommerce/core/data/datasource/local/cart_local_data_source.dart'
     as _i3;
 import 'package:kortobaa_ecommerce/core/data/repositories/cart_repository_impl.dart'
@@ -81,13 +85,13 @@ import 'package:kortobaa_ecommerce/favorite/domain/usecases/get_favorite_product
 import 'package:kortobaa_ecommerce/favorite/domain/usecases/get_favorite_product_use_case.dart'
     as _i14;
 import 'package:kortobaa_ecommerce/favorite/presentation/cubits/add_product_to_favorite_cubit.dart'
-    as _i43;
-import 'package:kortobaa_ecommerce/favorite/presentation/cubits/delete_product_from_favorite_cubit.dart'
     as _i44;
+import 'package:kortobaa_ecommerce/favorite/presentation/cubits/delete_product_from_favorite_cubit.dart'
+    as _i45;
 import 'package:kortobaa_ecommerce/favorite/presentation/cubits/get_favorite_product_cubit.dart'
     as _i35;
 import 'package:kortobaa_ecommerce/favorite/presentation/cubits/get_favorite_product_list_cubit.dart'
-    as _i47;
+    as _i48;
 import 'package:kortobaa_ecommerce/home/data/datasource/remote/home_remote_data_source.dart'
     as _i15;
 import 'package:kortobaa_ecommerce/home/data/repositories/home_repository_impl.dart'
@@ -97,8 +101,8 @@ import 'package:kortobaa_ecommerce/home/domain/repositories/home_repository.dart
 import 'package:kortobaa_ecommerce/home/domain/usecases/get_product_list_by_category_id_use_case.dart'
     as _i38;
 import 'package:kortobaa_ecommerce/home/presentation/cubits/get_product_list_by_category_id_cubit.dart'
-    as _i50;
-import 'package:kortobaa_ecommerce/injectable_module.dart' as _i53;
+    as _i51;
+import 'package:kortobaa_ecommerce/injectable_module.dart' as _i55;
 import 'package:kortobaa_ecommerce/product_details/data/datasource/remote/product_details_remote_data_source.dart'
     as _i18;
 import 'package:kortobaa_ecommerce/product_details/data/repositories/product_details_repository_impl.dart'
@@ -108,7 +112,7 @@ import 'package:kortobaa_ecommerce/product_details/domain/repositories/product_d
 import 'package:kortobaa_ecommerce/product_details/domain/usecases/get_product_by_id_use_case.dart'
     as _i37;
 import 'package:kortobaa_ecommerce/product_details/presentation/cubits/get_product_by_id_cubit.dart'
-    as _i49;
+    as _i50;
 import 'package:shared_preferences/shared_preferences.dart' as _i21;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -192,43 +196,47 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i39.LoginUseCase(gh<_i26.AuthRepository>()));
     gh.lazySingleton<_i40.RegisterUseCase>(
         () => _i40.RegisterUseCase(gh<_i26.AuthRepository>()));
-    gh.lazySingleton<_i41.SetLoggedUserTokenUseCase>(
-        () => _i41.SetLoggedUserTokenUseCase(gh<_i26.AuthRepository>()));
-    gh.lazySingleton<_i42.AddProductToCartCubit>(
-        () => _i42.AddProductToCartCubit(gh<_i22.AddProductToCartUseCase>()));
-    gh.lazySingleton<_i43.AddProductToFavoriteCubit>(() =>
-        _i43.AddProductToFavoriteCubit(gh<_i23.AddProductToFavoriteUseCase>()));
-    gh.lazySingleton<_i44.DeleteProductFromFavoriteCubit>(() =>
-        _i44.DeleteProductFromFavoriteCubit(
+    gh.lazySingleton<_i41.RemoveUserTokenUseCase>(
+        () => _i41.RemoveUserTokenUseCase(gh<_i26.AuthRepository>()));
+    gh.lazySingleton<_i42.SetLoggedUserTokenUseCase>(
+        () => _i42.SetLoggedUserTokenUseCase(gh<_i26.AuthRepository>()));
+    gh.lazySingleton<_i43.AddProductToCartCubit>(
+        () => _i43.AddProductToCartCubit(gh<_i22.AddProductToCartUseCase>()));
+    gh.lazySingleton<_i44.AddProductToFavoriteCubit>(() =>
+        _i44.AddProductToFavoriteCubit(gh<_i23.AddProductToFavoriteUseCase>()));
+    gh.lazySingleton<_i45.DeleteProductFromFavoriteCubit>(() =>
+        _i45.DeleteProductFromFavoriteCubit(
             gh<_i32.DeleteProductFromFavoriteUseCase>()));
-    gh.factory<_i45.GetCartProductListCubit>(() => _i45.GetCartProductListCubit(
+    gh.factory<_i46.GetCartProductListCubit>(() => _i46.GetCartProductListCubit(
           gh<_i11.GetCartProductListUseCase>(),
-          gh<_i42.AddProductToCartCubit>(),
+          gh<_i43.AddProductToCartCubit>(),
           gh<_i31.DeleteProductFromCartCubit>(),
         ));
-    gh.factory<_i46.GetCategoryListCubit>(
-        () => _i46.GetCategoryListCubit(gh<_i34.GetCategoryListUseCase>()));
-    gh.factory<_i47.GetFavoriteProductListCubit>(
-        () => _i47.GetFavoriteProductListCubit(
+    gh.factory<_i47.GetCategoryListCubit>(
+        () => _i47.GetCategoryListCubit(gh<_i34.GetCategoryListUseCase>()));
+    gh.factory<_i48.GetFavoriteProductListCubit>(
+        () => _i48.GetFavoriteProductListCubit(
               gh<_i13.GetFavoriteProductListUseCase>(),
-              gh<_i44.DeleteProductFromFavoriteCubit>(),
-              gh<_i43.AddProductToFavoriteCubit>(),
+              gh<_i45.DeleteProductFromFavoriteCubit>(),
+              gh<_i44.AddProductToFavoriteCubit>(),
             ));
-    gh.factory<_i48.GetLoggedUserTokenCubit>(() =>
-        _i48.GetLoggedUserTokenCubit(gh<_i36.GetLoggedUserTokenUseCase>()));
-    gh.factory<_i49.GetProductByIdCubit>(
-        () => _i49.GetProductByIdCubit(gh<_i37.GetProductByIdUseCase>()));
-    gh.factory<_i50.GetProductListByCategoryIdCubit>(() =>
-        _i50.GetProductListByCategoryIdCubit(
+    gh.factory<_i49.GetLoggedUserTokenCubit>(() =>
+        _i49.GetLoggedUserTokenCubit(gh<_i36.GetLoggedUserTokenUseCase>()));
+    gh.factory<_i50.GetProductByIdCubit>(
+        () => _i50.GetProductByIdCubit(gh<_i37.GetProductByIdUseCase>()));
+    gh.factory<_i51.GetProductListByCategoryIdCubit>(() =>
+        _i51.GetProductListByCategoryIdCubit(
             gh<_i38.GetProductListByCategoryIdUseCase>()));
-    gh.factory<_i51.LoginCubit>(() => _i51.LoginCubit(
+    gh.factory<_i52.LoginCubit>(() => _i52.LoginCubit(
           gh<_i39.LoginUseCase>(),
-          gh<_i41.SetLoggedUserTokenUseCase>(),
+          gh<_i42.SetLoggedUserTokenUseCase>(),
         ));
-    gh.factory<_i52.RegisterCubit>(
-        () => _i52.RegisterCubit(gh<_i40.RegisterUseCase>()));
+    gh.factory<_i53.RegisterCubit>(
+        () => _i53.RegisterCubit(gh<_i40.RegisterUseCase>()));
+    gh.factory<_i54.RemoveUserTokenCubit>(
+        () => _i54.RemoveUserTokenCubit(gh<_i41.RemoveUserTokenUseCase>()));
     return this;
   }
 }
 
-class _$InjectableModule extends _i53.InjectableModule {}
+class _$InjectableModule extends _i55.InjectableModule {}

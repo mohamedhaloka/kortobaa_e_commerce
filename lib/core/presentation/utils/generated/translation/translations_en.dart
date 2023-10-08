@@ -147,4 +147,7 @@ class TranslationsEn extends Translations {
 
   @override
   String get shareApp => 'Share app';
+
+  @override
+  String get logOut => 'تسجيل الخروج';
 }

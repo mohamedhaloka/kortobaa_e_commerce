@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kortobaa_ecommerce/cart/presentation/cubits/get_cart_product_list_cubit.dart';
 import 'package:kortobaa_ecommerce/cart/presentation/pages/cart_page.dart';
 import 'package:kortobaa_ecommerce/category/presentation/pages/category_list_page.dart';
+import 'package:kortobaa_ecommerce/core/dynamic_link_service.dart';
 import 'package:kortobaa_ecommerce/core/presentation/blocs/base_states/base_state.dart';
 import 'package:kortobaa_ecommerce/core/presentation/themes/app_theme.dart';
 import 'package:kortobaa_ecommerce/core/presentation/utils/generated/translation/translations.dart';
@@ -54,6 +55,7 @@ class _MainPageState extends State<MainPage> {
       ];
       _currentRoute = _items.first.route;
       setState(() {});
+      DynamicLinkHandler.I.initDynamicLinks(context);
     });
     super.initState();
   }

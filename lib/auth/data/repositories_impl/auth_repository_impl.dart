@@ -89,4 +89,14 @@ class AuthRepositoryImpl extends AuthRepository {
       return Left(ServerFailure(errorCode: ServerErrorCode.notFound));
     }
   }
+
+  @override
+  Future<Either<Failure, Unit>> removeUserToken() async {
+    try {
+      await _authLocalDataSource.removeUserToken();
+      return const Right(unit);
+    } on Exception catch (_) {
+      return Left(ServerFailure(errorCode: ServerErrorCode.notFound));
+    }
+  }
 }
