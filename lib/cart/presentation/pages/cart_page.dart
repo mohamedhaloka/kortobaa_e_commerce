@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kortobaa_ecommerce/cart/presentation/cubits/add_product_to_cart_cubit.dart';
 import 'package:kortobaa_ecommerce/cart/presentation/cubits/delete_product_from_cart_cubit.dart';
 import 'package:kortobaa_ecommerce/cart/presentation/cubits/get_cart_product_list_cubit.dart';
+import 'package:kortobaa_ecommerce/cart/presentation/widgets/apply_coupon_input.dart';
 import 'package:kortobaa_ecommerce/core/presentation/blocs/base_states/base_state.dart';
 import 'package:kortobaa_ecommerce/core/presentation/themes/app_theme.dart';
 import 'package:kortobaa_ecommerce/core/presentation/utils/generated/translation/translations.dart';
+import 'package:kortobaa_ecommerce/core/presentation/utils/sliver_grid_delegate_with_fixed_height.dart';
 import 'package:kortobaa_ecommerce/home/domain/entities/product.dart';
 import 'package:kortobaa_ecommerce/injection.dart';
-
-import '../../../core/presentation/utils/sliver_grid_delegate_with_fixed_height.dart';
 
 class CartPage extends StatefulWidget {
   static String path = '/cartPage';
@@ -103,7 +103,8 @@ class _CartPageState extends State<CartPage> {
                             text: '${tr.total}: ',
                             children: [
                               TextSpan(
-                                text: '$totalPrice ${tr.egp}',
+                                text:
+                                    '${totalPrice.toStringAsFixed(2)} ${tr.egp}',
                                 style: themeData.textTheme.titleMedium,
                               ),
                             ],
@@ -142,16 +143,7 @@ class _CartPageState extends State<CartPage> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                   ),
-                  ClipPath(
-                    clipper: SinCosineWaveClipper(),
-                    child: Container(
-                      height: 140,
-                      color: themeData.primaryColor,
-                      padding: const EdgeInsets.all(12),
-                      margin: const EdgeInsets.symmetric(vertical: 32),
-                      width: MediaQuery.of(context).size.width,
-                    ),
-                  ),
+                  const ApplyCouponInput(),
                   Card(
                     shape: const RoundedRectangleBorder(side: BorderSide.none),
                     margin: const EdgeInsets.only(bottom: 16),
@@ -370,43 +362,10 @@ class _CartDetailsItemWidget extends StatelessWidget {
           ),
         ),
         Text(
-          '$value ${tr.egp}',
+          '${value.toStringAsFixed(2)} ${tr.egp}',
           style: themeData.textTheme.titleMedium,
         ),
       ],
     );
   }
-}
-
-class SinCosineWaveClipper extends CustomClipper<Path> {
-  final double heightOfPoint;
-  final int numberOfPoints;
-
-  SinCosineWaveClipper({this.heightOfPoint = 8, this.numberOfPoints = 25});
-
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    path.lineTo(0, 0);
-    double x = 0.0;
-    double y = 0.0;
-    double increment = size.width / numberOfPoints / 2;
-
-    while (y < size.height) {
-      y += increment;
-      x = (x == 0) ? 0 + heightOfPoint : 0;
-      path.lineTo(x, y);
-    }
-    path.lineTo(size.width, size.height);
-    path.lineTo(size.width, 0.0);
-
-    x = size.width;
-    y = 0.0;
-
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper oldClipper) => oldClipper != this;
 }

@@ -70,7 +70,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, String>> getUserLoggedToken() async {
+  Future<Either<Failure, String?>> getUserLoggedToken() async {
     try {
       final token = await _authLocalDataSource.getUserLoggedToken();
       return Right(token);

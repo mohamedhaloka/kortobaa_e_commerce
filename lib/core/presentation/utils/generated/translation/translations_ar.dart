@@ -86,7 +86,7 @@ class TranslationsAr extends Translations {
   String get shareProduct => 'مشاركة المنتج';
 
   @override
-  String get addedToCart => 'إضافة للسلة';
+  String get addedToCart => 'مضاف للسلة';
 
   @override
   String get newAccount => 'حساب جديد';
@@ -141,4 +141,10 @@ class TranslationsAr extends Translations {
 
   @override
   String get cartEmpty => 'سلة المشتريات فارغة';
+
+  @override
+  String get addToFavorite => 'اضافة للمفضلة';
+
+  @override
+  String get shareApp => 'شارك المنتج';
 }

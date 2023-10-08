@@ -8,4 +8,6 @@ abstract class CartRepository {
   Future<Either<Failure, int>> addProduct(Product product);
 
   Future<Either<Failure, Unit>> deleteProduct(String id);
+
+  Future<Either<Failure, Product?>> getProduct(String id);
 }

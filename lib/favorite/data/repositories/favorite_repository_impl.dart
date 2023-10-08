@@ -43,4 +43,14 @@ class FavoriteRepositoryImpl extends FavoriteRepository {
       return left(ServerFailure(errorCode: ServerErrorCode.serverError));
     }
   }
+
+  @override
+  Future<Either<Failure, Product?>> getProduct(String id) async {
+    try {
+      final result = await _favoriteLocalDataSource.getProduct(id);
+      return right(result?.toDomain());
+    } catch (e) {
+      return left(ServerFailure(errorCode: ServerErrorCode.serverError));
+    }
+  }
 }

@@ -10,6 +10,8 @@ abstract class FavoriteLocalDataSource {
   Future<int> addProduct(ProductModel product);
 
   Future<void> deleteProduct(String id);
+
+  Future<ProductModel?> getProduct(String id);
 }
 
 @LazySingleton(as: FavoriteLocalDataSource)
@@ -62,5 +64,16 @@ class FavoriteLocalDataSourceImpl extends FavoriteLocalDataSource {
     } catch (err) {
       log('Something went wrong when deleting an item: $err');
     }
+  }
+
+  @override
+  Future<ProductModel?> getProduct(String id) async {
+    final db = await _initializeCartDB();
+    var queryResult =
+        await db.rawQuery('SELECT * FROM FavoriteProducts WHERE id=$id');
+
+    return queryResult.isEmpty
+        ? null
+        : ProductModel.fromJson(queryResult.first);
   }
 }

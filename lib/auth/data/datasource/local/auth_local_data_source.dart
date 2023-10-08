@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class AuthLocalDataSource {
   Future<bool> setUserLoggedToken(String token);
-  Future<String> getUserLoggedToken();
+  Future<String?> getUserLoggedToken();
 }
 
 @LazySingleton(as: AuthLocalDataSource)
@@ -12,14 +12,10 @@ class AuthLocalDataSourceImpl extends AuthLocalDataSource {
   AuthLocalDataSourceImpl(this._preferences);
 
   @override
-  Future<String> getUserLoggedToken() async {
+  Future<String?> getUserLoggedToken() async {
     final String? token = _preferences.getString('token');
 
-    if (token != null) {
-      return token;
-    } else {
-      throw Exception();
-    }
+    return token;
   }
 
   @override

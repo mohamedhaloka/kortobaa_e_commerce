@@ -41,4 +41,14 @@ class CartRepositoryImpl extends CartRepository {
       return left(ServerFailure(errorCode: ServerErrorCode.serverError));
     }
   }
+
+  @override
+  Future<Either<Failure, Product?>> getProduct(String id) async {
+    try {
+      final result = await _cartLocalDataSource.getProduct(id);
+      return right(result?.toDomain());
+    } catch (e) {
+      return left(ServerFailure(errorCode: ServerErrorCode.serverError));
+    }
+  }
 }

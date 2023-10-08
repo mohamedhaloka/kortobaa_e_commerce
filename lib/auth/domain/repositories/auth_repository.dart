@@ -15,7 +15,7 @@ abstract class AuthRepository {
     required String lastName,
   });
 
-  Future<Either<Failure, String>> getUserLoggedToken();
+  Future<Either<Failure, String?>> getUserLoggedToken();
 
   Future<Either<Failure, bool>> setUserLoggedToken(String token);
 }

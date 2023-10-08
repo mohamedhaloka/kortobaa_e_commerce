@@ -4,8 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:kortobaa_ecommerce/cart/presentation/cubits/add_product_to_cart_cubit.dart';
 import 'package:kortobaa_ecommerce/cart/presentation/cubits/delete_product_from_cart_cubit.dart';
 import 'package:kortobaa_ecommerce/cart/presentation/cubits/get_cart_product_list_cubit.dart';
+import 'package:kortobaa_ecommerce/category/presentation/pages/category_list_page.dart';
 import 'package:kortobaa_ecommerce/core/presentation/blocs/base_states/base_state.dart';
 import 'package:kortobaa_ecommerce/core/presentation/themes/app_theme.dart';
+import 'package:kortobaa_ecommerce/core/presentation/utils/generated/translation/translations.dart';
 import 'package:kortobaa_ecommerce/core/presentation/widgets/error_view.dart';
 import 'package:kortobaa_ecommerce/core/presentation/widgets/loader.dart';
 import 'package:kortobaa_ecommerce/favorite/presentation/cubits/add_product_to_favorite_cubit.dart';
@@ -15,8 +17,6 @@ import 'package:kortobaa_ecommerce/home/domain/entities/product.dart';
 import 'package:kortobaa_ecommerce/home/presentation/cubits/get_product_list_by_category_id_cubit.dart';
 import 'package:kortobaa_ecommerce/injection.dart';
 import 'package:kortobaa_ecommerce/product_details/presentation/pages/product_details_page.dart';
-
-import '../../../core/presentation/utils/generated/translation/translations.dart';
 
 class ProductHorizontalList extends StatefulWidget {
   const ProductHorizontalList(
@@ -63,6 +63,13 @@ class _ProductHorizontalListState extends State<ProductHorizontalList> {
   }
 
   @override
+  void dispose() {
+    _getCartProductListCubit.close();
+    _getFavoriteProductListCubit.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
     final Translations tr = Translations.of(context)!;
@@ -83,7 +90,7 @@ class _ProductHorizontalListState extends State<ProductHorizontalList> {
                   ),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () => context.goNamed(CategoryListPage.path),
                   child:
                       Text(tr.showAll, style: themeData.textTheme.labelLarge),
                 ),
@@ -97,6 +104,7 @@ class _ProductHorizontalListState extends State<ProductHorizontalList> {
                 bloc: _getCartProductListCubit,
                 listener: (_, state) {
                   if (state.isSuccess) {
+                    productsInCart.clear();
                     productsInCart.addAll(state.item!);
                     setState(() {});
                   }
@@ -107,6 +115,7 @@ class _ProductHorizontalListState extends State<ProductHorizontalList> {
                 bloc: _getFavoriteProductListCubit,
                 listener: (_, state) {
                   if (state.isSuccess) {
+                    productsInFavorite.clear();
                     productsInFavorite.addAll(state.item!);
                     setState(() {});
                   }

@@ -9,7 +9,7 @@ import 'package:kortobaa_ecommerce/core/domain/usecases/use_case.dart';
 import 'package:kortobaa_ecommerce/core/presentation/blocs/base_states/base_state.dart';
 import 'package:kortobaa_ecommerce/home/domain/entities/product.dart';
 
-@lazySingleton
+@injectable
 class GetCartProductListCubit extends Cubit<BaseState<List<Product>>> {
   final GetCartProductListUseCase _getCartProductListUseCase;
   final AddProductToCartCubit _addProductToCartCubit;
@@ -19,18 +19,17 @@ class GetCartProductListCubit extends Cubit<BaseState<List<Product>>> {
     this._addProductToCartCubit,
     this._deleteProductFromCartCubit,
   ) : super(const BaseState()) {
-    _addProductToCartStreamSubscribtion =
-        _addProductToCartCubit.stream.listen((event) {
-      getCartProductList();
-    });
-    _deleteProductFromCartStreamSubscribtion =
+    _addProductToCartStreamSubscription = _addProductToCartCubit.stream.listen(
+      (event) => getCartProductList(),
+    );
+    _deleteProductFromCartStreamSubscription =
         _deleteProductFromCartCubit.stream.listen(
       (event) => getCartProductList(),
     );
   }
 
-  late StreamSubscription<BaseState> _addProductToCartStreamSubscribtion;
-  late StreamSubscription<BaseState> _deleteProductFromCartStreamSubscribtion;
+  late StreamSubscription<BaseState> _addProductToCartStreamSubscription;
+  late StreamSubscription<BaseState> _deleteProductFromCartStreamSubscription;
 
   void getCartProductList() async {
     emit(state.setInProgressState());
@@ -45,8 +44,8 @@ class GetCartProductListCubit extends Cubit<BaseState<List<Product>>> {
 
   @override
   Future<void> close() {
-    _addProductToCartStreamSubscribtion.cancel();
-    _deleteProductFromCartStreamSubscribtion.cancel();
+    _addProductToCartStreamSubscription.cancel();
+    _deleteProductFromCartStreamSubscription.cancel();
     return super.close();
   }
 }

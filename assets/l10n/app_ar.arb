@@ -26,7 +26,7 @@
   "addToCart": "إضافة للسلة",
   "cart": "سلة التسوق",
   "shareProduct": "مشاركة المنتج",
-  "addedToCart": "إضافة للسلة",
+  "addedToCart": "مضاف للسلة",
   "newAccount": "حساب جديد",
   "welcomePleaseFillYourData": "مرحباً بك ، قم بملئ البيانات للتسجيل",
   "username": "اسم المستخدم",
@@ -44,6 +44,8 @@
   "doYouHaveCoupon": "هل تمتلك كوبون للخصم",
   "enterCoupon": "ادخل رقم الكوبون",
   "apply": "تطبيق",
+  "cartEmpty": "سلة المشتريات فارغة",
+  "addToFavorite": "اضافة للمفضلة",
+  "shareApp": "شارك المنتج"
 
-  "cartEmpty": "سلة المشتريات فارغة"
 }

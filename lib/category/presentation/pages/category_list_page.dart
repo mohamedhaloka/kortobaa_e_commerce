@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kortobaa_ecommerce/category/domain/entities/category.dart';
 import 'package:kortobaa_ecommerce/category/presentation/cubits/get_category_list_cubit.dart';
 import 'package:kortobaa_ecommerce/core/presentation/blocs/base_states/base_state.dart';
 import 'package:kortobaa_ecommerce/core/presentation/themes/app_theme.dart';
 import 'package:kortobaa_ecommerce/core/presentation/widgets/error_view.dart';
 import 'package:kortobaa_ecommerce/core/presentation/widgets/loader.dart';
+import 'package:kortobaa_ecommerce/home/presentation/pages/home_page.dart';
 import 'package:kortobaa_ecommerce/injection.dart';
 
 import '../../../core/presentation/utils/generated/translation/translations.dart';
@@ -33,8 +35,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
     final Translations tr = Translations.of(context)!;
-    final Size screenSize = MediaQuery.sizeOf(context)!;
-
+    final Size screenSize = MediaQuery.sizeOf(context);
     return Scaffold(
       drawer: const Drawer(),
       appBar: AppBar(
@@ -60,31 +61,34 @@ class _CategoryListPageState extends State<CategoryListPage> {
                 height: 150,
               ),
               padding: const EdgeInsets.all(16),
-              itemBuilder: (_, index) => SizedBox(
-                height: 150,
-                child: Card(
-                  margin: EdgeInsets.zero,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      SizedBox.expand(
-                        child: Image.network(
-                          state.item![index].imageLink,
-                          fit: BoxFit.cover,
+              itemBuilder: (_, index) => InkWell(
+                onTap: () => context.goNamed(HomePage.path),
+                child: SizedBox(
+                  height: 150,
+                  child: Card(
+                    margin: EdgeInsets.zero,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        SizedBox.expand(
+                          child: Image.network(
+                            state.item![index].imageLink,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      SizedBox.expand(
-                        child: Container(
-                          color: Colors.black12,
+                        SizedBox.expand(
+                          child: Container(
+                            color: Colors.black12,
+                          ),
                         ),
-                      ),
-                      Text(
-                        state.item![index].name,
-                        style: themeData.textTheme.headlineSmall!.copyWith(
-                          color: themeData.appColors.whiteColor,
+                        Text(
+                          state.item![index].name,
+                          style: themeData.textTheme.headlineSmall!.copyWith(
+                            color: themeData.appColors.whiteColor,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

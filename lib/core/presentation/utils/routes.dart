@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kortobaa_ecommerce/auth/presentation/pages/login_page.dart';
 import 'package:kortobaa_ecommerce/auth/presentation/pages/register_page.dart';
-import 'package:kortobaa_ecommerce/cart/presentation/pages/cart_page.dart';
 import 'package:kortobaa_ecommerce/home/presentation/pages/home_page.dart';
 import 'package:kortobaa_ecommerce/main/presentation/pages/main_page.dart';
 import 'package:kortobaa_ecommerce/product_details/presentation/pages/product_details_page.dart';
 
+import '../../../cart/presentation/pages/cart_page.dart';
 import '../../../category/presentation/pages/category_list_page.dart';
 import '../../../favorite/presentation/pages/favorite_list_page.dart';
 import '../../../profile/presentation/pages/profile_page.dart';
@@ -37,7 +37,8 @@ class Routes {
         GoRoute(
           path: HomePage.path,
           name: HomePage.path,
-          builder: (context, state) => const HomePage(),
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: HomePage()),
           routes: [
             GoRoute(
               parentNavigatorKey: rootNavigatorKey,
@@ -50,22 +51,27 @@ class Routes {
         GoRoute(
           path: CartPage.path,
           name: CartPage.path,
-          builder: (context, state) => const CartPage(),
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: CartPage()),
         ),
         GoRoute(
           path: CategoryListPage.path,
           name: CategoryListPage.path,
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: CategoryListPage()),
           builder: (context, state) => const CategoryListPage(),
         ),
         GoRoute(
           path: FavoriteListPage.path,
           name: FavoriteListPage.path,
-          builder: (context, state) => const FavoriteListPage(),
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: FavoriteListPage()),
         ),
         GoRoute(
           path: ProfilePage.path,
           name: ProfilePage.path,
-          builder: (context, state) => const ProfilePage(),
+          pageBuilder: (context, state) =>
+              const NoTransitionPage(child: ProfilePage()),
         ),
       ],
     ),

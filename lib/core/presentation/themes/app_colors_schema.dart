@@ -38,6 +38,8 @@ abstract class AppColorScheme {
   Color get shimmerBaseColor;
 
   Color get shimmerHighlightColor;
+
+  Color get green;
 }
 
 class AppLightColors extends AppColorScheme {
@@ -96,6 +98,9 @@ class AppLightColors extends AppColorScheme {
 
   @override
   Color get shimmerHighlightColor => const Color(0xFFCCCCCC);
+
+  @override
+  Color get green => const Color(0xFF14A10F);
 }
 
 class AppDarkColors extends AppColorScheme {
@@ -154,4 +159,7 @@ class AppDarkColors extends AppColorScheme {
 
   @override
   Color get shimmerHighlightColor => const Color(0xFF1E1E1E);
+
+  @override
+  Color get green => const Color(0xFF0B5E08);
 }

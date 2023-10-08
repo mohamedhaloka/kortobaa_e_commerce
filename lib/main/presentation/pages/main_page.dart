@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kortobaa_ecommerce/cart/presentation/cubits/get_cart_product_list_cubit.dart';
 import 'package:kortobaa_ecommerce/cart/presentation/pages/cart_page.dart';
 import 'package:kortobaa_ecommerce/category/presentation/pages/category_list_page.dart';
+import 'package:kortobaa_ecommerce/core/presentation/blocs/base_states/base_state.dart';
 import 'package:kortobaa_ecommerce/core/presentation/themes/app_theme.dart';
 import 'package:kortobaa_ecommerce/core/presentation/utils/generated/translation/translations.dart';
 import 'package:kortobaa_ecommerce/favorite/presentation/pages/favorite_list_page.dart';
@@ -12,8 +13,6 @@ import 'package:kortobaa_ecommerce/home/presentation/pages/home_page.dart';
 import 'package:kortobaa_ecommerce/injection.dart';
 import 'package:kortobaa_ecommerce/main/presentation/utils/bottom_item_model.dart';
 import 'package:kortobaa_ecommerce/profile/presentation/pages/profile_page.dart';
-
-import '../../../core/presentation/blocs/base_states/base_state.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage(this.child, {super.key});
@@ -24,9 +23,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final GetCartProductListCubit _getCartProductListCubit =
-      getIt<GetCartProductListCubit>();
-
   List<BottomItemModel> _items = <BottomItemModel>[];
 
   String? _currentRoute;
@@ -69,30 +65,14 @@ class _MainPageState extends State<MainPage> {
         body: widget.child,
         floatingActionButton: _currentRoute == HomePage.path
             ? null
-            : BlocBuilder<GetCartProductListCubit, BaseState<List<Product>>>(
-                bloc: _getCartProductListCubit,
-                builder: (_, state) => FloatingActionButton(
-                      backgroundColor:
-                          Theme.of(context).appColors.secondaryColor,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if ((state.item ?? []).isNotEmpty)
-                            Text((state.item ?? []).length.toString()),
-                          Icon(
-                            Icons.shopping_cart,
-                            color: themeData.appColors.whiteColor,
-                          ),
-                        ],
-                      ),
-                      onPressed: () {
-                        if (_currentRoute == CartPage.path) return;
-                        context.goNamed(CartPage.path);
-                        _currentRoute = CartPage.path;
-                        setState(() {});
-                      },
-                    )),
+            : _CartFloatingBtn(
+                onPressed: () {
+                  if (_currentRoute == CartPage.path) return;
+                  context.pushNamed(CartPage.path);
+                  _currentRoute = CartPage.path;
+                  setState(() {});
+                },
+              ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
           height: kToolbarHeight,
@@ -133,5 +113,48 @@ class _MainPageState extends State<MainPage> {
                 .toList(),
           ),
         ));
+  }
+}
+
+class _CartFloatingBtn extends StatefulWidget {
+  const _CartFloatingBtn({required this.onPressed});
+  final void Function() onPressed;
+
+  @override
+  State<_CartFloatingBtn> createState() => _CartFloatingBtnState();
+}
+
+class _CartFloatingBtnState extends State<_CartFloatingBtn> {
+  final GetCartProductListCubit _getCartProductListCubit =
+      getIt<GetCartProductListCubit>();
+
+  @override
+  void initState() {
+    _getCartProductListCubit.getCartProductList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+
+    return BlocBuilder<GetCartProductListCubit, BaseState<List<Product>>>(
+        bloc: _getCartProductListCubit,
+        builder: (_, state) => FloatingActionButton(
+              backgroundColor: Theme.of(context).appColors.secondaryColor,
+              onPressed: widget.onPressed,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if ((state.item ?? []).isNotEmpty)
+                    Text((state.item ?? []).length.toString()),
+                  Icon(
+                    Icons.shopping_cart,
+                    color: themeData.appColors.whiteColor,
+                  ),
+                ],
+              ),
+            ));
   }
 }

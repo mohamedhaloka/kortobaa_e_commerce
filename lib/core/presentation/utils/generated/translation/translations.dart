@@ -258,7 +258,7 @@ abstract class Translations {
   /// No description provided for @addedToCart.
   ///
   /// In ar, this message translates to:
-  /// **'إضافة للسلة'**
+  /// **'مضاف للسلة'**
   String get addedToCart;
 
   /// No description provided for @newAccount.
@@ -368,6 +368,18 @@ abstract class Translations {
   /// In ar, this message translates to:
   /// **'سلة المشتريات فارغة'**
   String get cartEmpty;
+
+  /// No description provided for @addToFavorite.
+  ///
+  /// In ar, this message translates to:
+  /// **'اضافة للمفضلة'**
+  String get addToFavorite;
+
+  /// No description provided for @shareApp.
+  ///
+  /// In ar, this message translates to:
+  /// **'شارك المنتج'**
+  String get shareApp;
 }
 
 class _TranslationsDelegate extends LocalizationsDelegate<Translations> {

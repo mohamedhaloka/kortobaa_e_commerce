@@ -44,5 +44,7 @@
   "enterCoupon": "Enter coupon",
   "register": "Enter",
   "apply": "Apply",
-  "cartEmpty": "Cart is empty"
+  "cartEmpty": "Cart is empty",
+  "addToFavorite": "Add to favorite",
+  "shareApp": "Share app"
 }
