@@ -386,6 +386,12 @@ abstract class Translations {
   /// In ar, this message translates to:
   /// **'تسجيل الخروج'**
   String get logOut;
+
+  /// No description provided for @langChar.
+  ///
+  /// In ar, this message translates to:
+  /// **'En'**
+  String get langChar;
 }
 
 class _TranslationsDelegate extends LocalizationsDelegate<Translations> {

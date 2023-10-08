@@ -46,5 +46,8 @@
   "apply": "Apply",
   "cartEmpty": "Cart is empty",
   "addToFavorite": "Add to favorite",
-  "shareApp": "Share app"
+  "shareApp": "Share app",
+  "logOut": "Log Out",
+  "addedToCart": "Added to cart",
+  "langChar": "ع"
 }

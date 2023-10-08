@@ -12,8 +12,24 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => MyAppState();
+
+  static MyAppState? of(BuildContext context) =>
+      context.findAncestorStateOfType<MyAppState>();
+}
+
+class MyAppState extends State<MyApp> {
+  Locale _locale = const Locale('ar');
+
+  void setLocale(Locale value) {
+    setState(() {
+      _locale = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +37,7 @@ class MyApp extends StatelessWidget {
       title: 'Kortobaa E-Commerce',
       localizationsDelegates: Translations.localizationsDelegates,
       supportedLocales: Translations.supportedLocales,
-      locale: const Locale('en'),
+      locale: _locale,
       theme: Theme.of(context).appTheme(Brightness.light).getThemeData(context),
       darkTheme:
           Theme.of(context).appTheme(Brightness.dark).getThemeData(context),

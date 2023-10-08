@@ -67,7 +67,7 @@ class ApplyCouponInput extends StatelessWidget {
                             ),
                             onPressed: () {},
                             child: Text(
-                              'تطبيق',
+                              tr.apply,
                               style: themeData.textTheme.titleMedium,
                             ),
                           ))
@@ -110,7 +110,7 @@ class SinCosineWaveClipper extends CustomClipper<Path> {
     path.lineTo(0, 0);
     double x = 0.0;
     double y = 0.0;
-    double increment = size.width / numberOfPoints / 2;
+    double increment = size.width / numberOfPoints / 5;
 
     while (y < size.height) {
       y += increment;

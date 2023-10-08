@@ -86,7 +86,7 @@ class TranslationsEn extends Translations {
   String get shareProduct => 'Share product';
 
   @override
-  String get addedToCart => 'مضاف للسلة';
+  String get addedToCart => 'Added to cart';
 
   @override
   String get newAccount => 'New account';
@@ -149,5 +149,8 @@ class TranslationsEn extends Translations {
   String get shareApp => 'Share app';
 
   @override
-  String get logOut => 'تسجيل الخروج';
+  String get logOut => 'Log Out';
+
+  @override
+  String get langChar => 'ع';
 }

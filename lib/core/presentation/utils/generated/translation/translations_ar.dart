@@ -150,4 +150,7 @@ class TranslationsAr extends Translations {
 
   @override
   String get logOut => 'تسجيل الخروج';
+
+  @override
+  String get langChar => 'En';
 }

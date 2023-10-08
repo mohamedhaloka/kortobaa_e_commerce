@@ -63,7 +63,7 @@ class _RegisterPageState extends State<RegisterPage>
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 50, bottom: 20),
-                child: Assets.images.authHeaderImage.image(scale: 3),
+                child: Assets.images.authHeaderImage.image(scale: 3 , width: 200,height:200,),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),

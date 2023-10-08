@@ -12,7 +12,6 @@ import 'package:kortobaa_ecommerce/favorite/presentation/pages/favorite_list_pag
 import 'package:kortobaa_ecommerce/home/domain/entities/product.dart';
 import 'package:kortobaa_ecommerce/home/presentation/pages/home_page.dart';
 import 'package:kortobaa_ecommerce/injection.dart';
-import 'package:kortobaa_ecommerce/main/presentation/utils/bottom_item_model.dart';
 import 'package:kortobaa_ecommerce/profile/presentation/pages/profile_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -24,45 +23,18 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List<BottomItemModel> _items = <BottomItemModel>[];
-
-  String? _currentRoute;
+  String? _currentRoute = HomePage.path;
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _items = [
-        BottomItemModel(
-          title: Translations.of(context)!.home,
-          route: HomePage.path,
-          icon: Icons.home,
-        ),
-        BottomItemModel(
-          title: Translations.of(context)!.category,
-          route: CategoryListPage.path,
-          icon: Icons.category,
-        ),
-        BottomItemModel(
-          title: Translations.of(context)!.favorite,
-          route: FavoriteListPage.path,
-          icon: Icons.favorite,
-        ),
-        BottomItemModel(
-          title: Translations.of(context)!.profile,
-          route: ProfilePage.path,
-          icon: Icons.person,
-        ),
-      ];
-      _currentRoute = _items.first.route;
-      setState(() {});
-      DynamicLinkHandler.I.initDynamicLinks(context);
-    });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => DynamicLinkHandler.I.initDynamicLinks(context),
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
     return Scaffold(
         body: widget.child,
         floatingActionButton: _currentRoute == HomePage.path
@@ -82,39 +54,84 @@ class _MainPageState extends State<MainPage> {
           notchMargin: 5,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: _items
-                .map((e) => Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          if (_currentRoute == e.route) return;
-                          setState(() => _currentRoute = e.route);
-                          context.pushNamed(_currentRoute!);
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              e.icon,
-                              color: _currentRoute == e.route
-                                  ? themeData.appColors.secondaryColor
-                                  : themeData.disabledColor,
-                            ),
-                            Text(
-                              e.title,
-                              style: themeData.textTheme.bodySmall!.copyWith(
-                                color: _currentRoute == e.route
-                                    ? themeData.appColors.secondaryColor
-                                    : themeData.disabledColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ))
-                .toList(),
+            children: [
+              _BottomMenuItem(
+                  title: Translations.of(context)!.home,
+                  route: HomePage.path,
+                  icon: Icons.home,
+                  onPressed: () => onBottomItemTapped(HomePage.path),
+                  currentRoute: _currentRoute),
+              _BottomMenuItem(
+                  title: Translations.of(context)!.category,
+                  route: CategoryListPage.path,
+                  icon: Icons.category,
+                  onPressed: () => onBottomItemTapped(CategoryListPage.path),
+                  currentRoute: _currentRoute),
+              _BottomMenuItem(
+                  title: Translations.of(context)!.favorite,
+                  route: FavoriteListPage.path,
+                  icon: Icons.favorite,
+                  onPressed: () => onBottomItemTapped(FavoriteListPage.path),
+                  currentRoute: _currentRoute),
+              _BottomMenuItem(
+                  title: Translations.of(context)!.profile,
+                  route: ProfilePage.path,
+                  icon: Icons.person,
+                  onPressed: () => onBottomItemTapped(ProfilePage.path),
+                  currentRoute: _currentRoute),
+            ],
           ),
         ));
+  }
+
+  void onBottomItemTapped(String route) {
+    if (_currentRoute == route) return;
+    setState(() => _currentRoute = route);
+    context.pushNamed(_currentRoute!);
+  }
+}
+
+class _BottomMenuItem extends StatelessWidget {
+  const _BottomMenuItem(
+      {required this.title,
+      required this.route,
+      required this.icon,
+      required this.onPressed,
+      required this.currentRoute});
+  final void Function() onPressed;
+  final String? currentRoute;
+  final String title;
+  final String route;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+    return Expanded(
+      child: InkWell(
+        onTap: onPressed,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              color: currentRoute == route
+                  ? themeData.appColors.secondaryColor
+                  : themeData.disabledColor,
+            ),
+            Text(
+              title,
+              style: themeData.textTheme.bodySmall!.copyWith(
+                color: currentRoute == route
+                    ? themeData.appColors.secondaryColor
+                    : themeData.disabledColor,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

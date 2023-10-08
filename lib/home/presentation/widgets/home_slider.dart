@@ -51,8 +51,9 @@ class _HomeSliderState extends State<HomeSlider> {
     return Column(
       children: [
         Container(
-          height: screenSize.height > 600 ? screenSize.height * .3 : 150,
+          height: screenSize.height > 700 ? screenSize.height * .3 : 150,
           margin: const EdgeInsets.only(top: 8, bottom: 16),
+          constraints: const BoxConstraints(maxWidth: 800),
           child: PageView.builder(
             controller: pageController,
             itemCount: sliderImages.length,
@@ -67,7 +68,7 @@ class _HomeSliderState extends State<HomeSlider> {
                 borderRadius: const BorderRadius.all(Radius.circular(12)),
                 child: Image.asset(
                   sliderImages[index],
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
             ),

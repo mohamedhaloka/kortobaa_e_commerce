@@ -60,6 +60,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
     final Translations tr = Translations.of(context)!;
+    final Locale localization = Localizations.localeOf(context);
     return Scaffold(
       body: MultiBlocListener(
         listeners: [
@@ -257,11 +258,20 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                              topRight: Radius.circular(4),
-                                              bottomRight: Radius.circular(4),
-                                            ),
+                                            borderRadius: localization
+                                                        .languageCode ==
+                                                    'ar'
+                                                ? const BorderRadius.only(
+                                                    topRight:
+                                                        Radius.circular(4),
+                                                    bottomRight:
+                                                        Radius.circular(4),
+                                                  )
+                                                : const BorderRadius.only(
+                                                    topLeft: Radius.circular(4),
+                                                    bottomLeft:
+                                                        Radius.circular(4),
+                                                  ),
                                             color: themeData.primaryColor),
                                         padding: const EdgeInsets.all(16),
                                         child: const Icon(
@@ -292,11 +302,20 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                              topLeft: Radius.circular(4),
-                                              bottomLeft: Radius.circular(4),
-                                            ),
+                                            borderRadius: localization
+                                                        .languageCode ==
+                                                    'ar'
+                                                ? const BorderRadius.only(
+                                                    topLeft: Radius.circular(4),
+                                                    bottomLeft:
+                                                        Radius.circular(4),
+                                                  )
+                                                : const BorderRadius.only(
+                                                    topRight:
+                                                        Radius.circular(4),
+                                                    bottomRight:
+                                                        Radius.circular(4),
+                                                  ),
                                             color: themeData.primaryColor),
                                         padding: const EdgeInsets.all(16),
                                         child: const Icon(
