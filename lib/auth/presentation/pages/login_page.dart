@@ -53,10 +53,10 @@ class _LoginPageState extends State<LoginPage>
         BlocListener<GetLoggedUserTokenCubit, BaseState<String?>>(
           bloc: _getLoggedUserTokenCubit,
           listener: (_, state) {
-            if (state.isSuccess) {
-              if (state.item == null) return;
+            if (state.item != null) {
               context.goNamed(HomePage.path);
             }
+
             checkingLocalToken = false;
             setState(() {});
           },
@@ -83,12 +83,12 @@ class _LoginPageState extends State<LoginPage>
           },
         ),
       ],
-      child: checkingLocalToken
-          ? const Loader()
-          : FormBuilder(
-              key: _formKey,
-              child: Scaffold(
-                body: ListView(
+      child: FormBuilder(
+        key: _formKey,
+        child: Scaffold(
+          body: checkingLocalToken
+              ? const Loader()
+              : ListView(
                   padding: const EdgeInsets.all(26),
                   children: [
                     Padding(
@@ -139,8 +139,9 @@ class _LoginPageState extends State<LoginPage>
                       onPressed: () {
                         _formKey.currentState?.save();
 
-                        if (!(_formKey.currentState?.validate() ?? false))
+                        if (!(_formKey.currentState?.validate() ?? false)) {
                           return;
+                        }
 
                         loginCubit.login(
                           username: _formKey.currentState!
@@ -175,8 +176,8 @@ class _LoginPageState extends State<LoginPage>
                     )
                   ],
                 ),
-              ),
-            ),
+        ),
+      ),
     );
   }
 }

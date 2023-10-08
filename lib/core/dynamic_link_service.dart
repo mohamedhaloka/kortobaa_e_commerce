@@ -9,6 +9,7 @@ import 'package:uni_links/uni_links.dart';
 class DynamicLinkHandler {
   DynamicLinkHandler._();
 
+  bool _initialURILinkHandled = false;
   static DynamicLinkHandler I = DynamicLinkHandler._();
 
   Future<String> createDynamicLink(Product product) async {
@@ -28,6 +29,8 @@ class DynamicLinkHandler {
 
   Future<void> initUniLinks(BuildContext context) async {
     try {
+      if (_initialURILinkHandled) return;
+      _initialURILinkHandled = false;
       final Uri? initialURI = await getInitialUri();
 
       if (initialURI == null) return;
