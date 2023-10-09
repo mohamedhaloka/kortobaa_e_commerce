@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage>
               case BaseStatus.success:
                 showSuccess();
                 stopLoading();
-                context.pushNamed(HomePage.path);
+                context.goNamed(HomePage.path);
                 break;
               case BaseStatus.failure:
                 showError(failure: state.failure);
